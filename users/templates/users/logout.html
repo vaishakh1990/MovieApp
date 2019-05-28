@@ -1,0 +1,9 @@
+{% extends "movieapp/base.html" %}
+{% block body %}
+<h2>You have been Logged Out!!</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Login Again ? <a href="{% url 'login' %}">Login Again</a>
+            </small>
+        </div>
+{% endblock body %}

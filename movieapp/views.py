@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from .forms import MovieSearchForm
 from movieapp.service import find_movie_list, find_movie_detail
+from .models import Favourite
+import json
 
 def home(request):
     return render(request, 'movieapp/main.html')
@@ -18,6 +20,26 @@ def find_movie(request):
         return render(request,'movieapp/main.html')
 
 def get_details(request):
-    Title = request.GET.get('title')
-    movie_details = find_movie_detail(Title)
+    id = request.GET.get('id')
+    movie_details = find_movie_detail(id)
     return render(request,'movieapp/details.html', {'movie_details' : movie_details })
+
+def save_favourite(request):
+    title = request.GET.get('title')
+    imdbid = request.GET.get('imdbid')
+    year = request.GET.get('year')
+    poster_url = request.GET.get('poster')
+    fav_exist = Favourite.objects.filter(Imdbid = imdbid,person_id = request.user)
+    print(fav_exist.values())
+    if fav_exist:
+        fav_exist.delete()
+        data = {'status':0}
+    else:
+        fav = Favourite(person_id=request.user,Imdbid=imdbid,Year=year,Title=title,Poster=poster_url)
+        tes = fav.save()
+        data = {'status':1}
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+def list_fav(request):
+    favlist = list(Favourite.objects.filter(person_id = request.user).values())
+    return render(request,'movieapp/favourite_list.html',{'fav_lists': favlist})

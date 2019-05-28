@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'movieapp.apps.MovieappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,3 +124,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 OMDB_URL = 'http://www.omdbapi.com/'
 OMDB_API_KEY = 'a43a80f'
+
+LOGIN_REDIRECT_URL = 'movies-search'

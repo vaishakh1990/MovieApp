@@ -1,44 +1,60 @@
-<!doctype html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-  <title>{% block title %}Movie Portal{% endblock %}</title>
-</head>
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'movieapp/css/Bootstrap.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'movieapp/css/style.css' %}" />
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'movieapp/css/main.css' %}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+            <title>Movie Portal</title>
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+       <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    <a class="navbar-brand" href="{% url 'movies-home' %}">Movie Portal</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarToggle">
+                         <ul class="nav navbar-nav navbar-right">
+                             {% if user.is_authenticated %}
+                             <li><a class="nav-item nav-link" href="{% url 'movies-listfav' %}">My Favourites</a></li>
+                             <li>
+                                 <form class="navbar-form navbar-right" action="{% url 'movies-search' %}" method="post" role="search">
+                                     {% csrf_token %}
+                                     <div class="form-group">
+                                         <input type="text" class="form-control" name="search" placeholder="Search">
+                                     </div>
+                                 </form>
 
-<body>
-<div class="fix">
-<nav class="navbar navbar-inverse fix" >
-  <div class="container-fluid" >
-
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{% url movies-home' %">Movie Portal</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="topNavBar">
-        <form class="navbar-form navbar-right" action="{% url 'movies-search' %}" method="post" role="search">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" class="form-control" name="search" placeholder="Search">
+                             </li>
+                            <li><a class="nav-item nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                             {% else %}
+                            <li><a class="nav-item nav-link" href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" id="messages" role="alert"></div>
+                    {% block body %}{% endblock body %}
+                </div>
             </div>
-            <!--<button type="submit" class="btn btn-default">Search</button> -->
-        </form>
-    </div>
-  </div>
-</nav>
-</div>
-{% block body %}
-{% endblock %}
-</body>
-<script src="{% static 'movieapp/js/jquery.min.js' %}"></script>
-<script src="{% static 'movieapp/bootstrap.min.js' %}"></script>
-{% block script %}
-{% endblock %}
+        </main>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="{% static 'movieapp/js/base.js' %}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
 </html>

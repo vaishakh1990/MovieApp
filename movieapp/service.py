@@ -3,8 +3,7 @@ from django.conf import settings
 
 def find_movie_detail(search_key):
     movie_list = list()
-    #url = 'http://www.omdbapi.com/?t={0}&apikey=a43a80f'.format(search_key)
-    url = settings.OMDB_URL + '?t={0}&apikey='.format(search_key) + settings.OMDB_API_KEY
+    url = settings.OMDB_URL + '?i={0}&type=movie&apikey='.format(search_key) + settings.OMDB_API_KEY
     response = requests.get(url)
     if response.status_code == requests.codes.ok:
         if response.json()['Response'] == 'True':
@@ -33,8 +32,7 @@ def find_movie_detail(search_key):
 
 def find_movie_list(search_key):
     movie_list = list()
-    #url = 'http://www.omdbapi.com/?s={0}&apikey=a43a80f'.format(search_key)
-    url = settings.OMDB_URL + '?s={0}&apikey='.format(search_key) + settings.OMDB_API_KEY
+    url = settings.OMDB_URL + '?s={0}&type=movie&apikey='.format(search_key) + settings.OMDB_API_KEY
     response = requests.get(url)
     if response.status_code == requests.codes.ok:
         if response.json()['Response'] == 'True':

@@ -1,53 +1,34 @@
 {% extends 'movieapp/base.html' %}
+{% load static %}
 {% block title %}{{ movie.title }}{% endblock %}
 {% block body %}
 {% if movie_details %}
 {% for movie in movie_details %}
 <div class="container-fluid songs-container">
-
-    <div class="row">
-        <!-- Left Album Info -->
-        <div class="col-sm-4 col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <<a href="#">
-                        {% if movie.poster_url %}
-                            <img src="{{ movie.poster_url }}" class="img-responsive">
-                        {% else %}
-                            <img src="/static/img/no-img.jpg" class="img-responsive">
-                        {% endif %}
-                    </a>
-                    <h2>{{ movie.title }} <small>{{ movie.year }}</small></h2>
-                    <h2>{{ movie.director }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8 col-md-9">
-
-            <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                <li role="presentation" class="active"><a href="{% url 'movies-home' %}">Back</a></li>
-                <li role="presentation" class="active"><a href="{% url 'movies-home'%}"></a></li>
-            </ul>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h5><strong>Watched</strong> :{% if movie.Watched %}Yes{% else %}No{% endif %}</h5>
-                    <h5><strong>Year</strong> : {{ movie.year }}</h5>
-                    <h5><strong>Released</strong> : {{ movie.released }}</h5>
-                    <h5><strong>Language</strong> : {{ movie.language }}</h5>
-                    <h5><strong>Genre</strong> : {{ movie.genre }}</h5>
-                    <h5><strong>IMDB Rating</strong> : {{ movie.imdbrating }}</h5>
-                    <h5><strong>Genre</strong> : {{ movie.Genre }}</h5>
-                    <h5><strong>Plot:</strong></h5>
-                    <p>{{ movie.plot }}</p>
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="media">
+      <div class="media-left">
+        <a href="#">
+            {% if movie.poster_url %}
+                <img class="media-object" src="{{ movie.poster_url }}" alt="...">
+            {% else %}
+            <img class="media-object" src="/static/img/no-img.jpg alt="...">
+            {% endif %}
+        </a>
+      </div>
+      <div class="media-body">
+        <h1 class="media-heading">{{ movie.title }}</h1>
+        <h5><strong>Year</strong> : {{ movie.year }}</h5>
+        <h5><strong>Rated</strong> : {{ movie.rated }}</h5>
+        <h5><strong>Released</strong> : {{ movie.released }}</h5>
+        <h5><strong>Language</strong> : {{ movie.language }}</h5>
+        <h5><strong>Genre</strong> : {{ movie.genre }}</h5>
+        <h5><strong>Director</strong> : {{ movie.director }}</h5>
+        <h5><strong>Genre</strong> : {{ movie.genre }}</h5>
+        <h5><strong>IMDB Rating</strong> : {{ movie.imdbrating }}</h5>
+        <h5><strong>Plot:</strong></h5>
+        <p>{{ movie.plot }}</p>
+      </div>
     </div>
-
 </div>
 {% endfor %}
 {% endif %}

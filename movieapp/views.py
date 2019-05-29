@@ -14,6 +14,11 @@ def find_movie(request):
         if form.is_valid():
             search_key = form.cleaned_data.get('search')
             movie_list = find_movie_list(search_key)
+            fav_list = list(Favourite.objects.filter(person_id = request.user).values('Imdbid'))
+            for mov in movie_list:
+                if any(d.get('Imdbid') == mov.get('imdbID') for d in fav_list):
+                   id = movie_list.index(mov)
+                   movie_list[id]['fav'] = 1
             return render(request,'movieapp/main.html',{ 'movie_lists': movie_list })
     else:
         form = MovieSearchForm()
@@ -30,7 +35,6 @@ def save_favourite(request):
     year = request.GET.get('year')
     poster_url = request.GET.get('poster')
     fav_exist = Favourite.objects.filter(Imdbid = imdbid,person_id = request.user)
-    print(fav_exist.values())
     if fav_exist:
         fav_exist.delete()
         data = {'status':0}

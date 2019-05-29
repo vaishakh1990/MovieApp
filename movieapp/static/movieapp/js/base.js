@@ -19,7 +19,6 @@ $.ajax({
             }
             else {
                 message = 'Removed from your favroties';
-                $('#frame_'+movie.Imdbid).hide();
             }
             $(key).css("color", color);
             $("#messages").text(message)
@@ -27,6 +26,10 @@ $.ajax({
             setTimeout(function() {
                 $('#messages').fadeOut('fast');
             }, 1000);
+            if($(key).attr('data_id') != 1)
+            {
+                location.reload();
+            }
         }
       });
 }

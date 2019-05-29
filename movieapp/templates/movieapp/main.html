@@ -25,8 +25,8 @@
               <h4>{{ movie.Year }}</h4>
             <p>
                 <a href="{% url 'movies-detail' %}?id={{ movie.imdbID }}" class="btn btn-primary btn-sm" role="button">View Details</a>
-                <a href=" #" class="btn btn-default btn-sm favourite" role="button" onclick="save_fav({{ movie }})">
-                <span class="glyphicon glyphicon-heart" id = "fav_{{ movie.imdbID }}" ></span></a>
+                <a href=" #" class="btn btn-default btn-sm favourite" role="button"  onclick="save_fav({{ movie }})">
+                <span class="glyphicon glyphicon-heart" data_id = "1" id = "fav_{{ movie.imdbID }}" {% if movie.fav %} style = "color:red;" {% endif %} ></span></a>
             </p>
           </div>
         </div>

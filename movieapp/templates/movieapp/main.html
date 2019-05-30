@@ -3,42 +3,58 @@
 {% block title %}Movie Potrtal{% endblock %}
 {% block body %}
 <div style="width:100%;height:80px">
+    <div class="page-header">
+        {% if movie_lists %}<h1> Search Results</h1>{% endif %}
+    </div>
 </div>
 <div class="container-fluid">
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{ error.msg }}!</div>
+    {% else %}
     {% if movie_lists %}
         {% for movie in movie_lists %}
-        {% if movie.imdbID%}
-        {% if forloop.counter|divisibleby:'3' or forloop.counter == 1 %}
-        <div class="row">
-        {% endif %}
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-            <a href="{% url 'movies-detail' %}?id={{ movie.imdbID }}">
-              {% ifnotequal movie.Poster 'N/A' %}
-               <img src="{{ movie.Poster }}" class="img-responsive" style="max-height:440px" alt="no poster available">
-               {% else %}
-               <img src="/static/movieapp/img/no-poster.jpg" class="img-responsive" style="max-height:440px">
-               {% endifnotequal %}
-           </a>
-          <div class="caption">
-              <h3>{{ movie.Title }}</h3>
-              <h4>{{ movie.Year }}</h4>
-            <p>
-                <a href="{% url 'movies-detail' %}?id={{ movie.imdbID }}" class="btn btn-primary btn-sm" role="button">View Details</a>
-                <a href=" #" class="btn btn-default btn-sm favourite" role="button"  onclick="save_fav({{ movie }})">
-                <span class="glyphicon glyphicon-heart" data_id = "1" id = "fav_{{ movie.imdbID }}" {% if movie.fav %} style = "color:red;" {% endif %} ></span></a>
-            </p>
-          </div>
-        </div>
-      </div>
-        {% if forloop.counter|divisibleby:'3' %}
-        </div>
-        {% endif %}
-        {% endif %}
+                {% if movie.imdbID%}
+                    {% if forloop.counter|divisibleby:'3' or forloop.counter == 1 %}
+                        <div class="row">
+                            {% endif %}
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <a href="{% url 'movies-detail' %}?id={{ movie.imdbID }}">
+                                        {% ifnotequal movie.Poster 'N/A' %}
+                                        <img src="{{ movie.Poster }}" class="img-responsive" style="max-height:440px" alt="no poster available">
+                                        {% else %}
+                                        <img src="/static/movieapp/img/no-poster.jpg" class="img-responsive" style="max-height:440px">
+                                        {% endifnotequal %}
+                                    </a>
+                                    <div class="caption">
+                                        <h3>{{ movie.Title }}</h3>
+                                        <h4>{{ movie.Year }}</h4>
+                                        <p>
+                                            <a href="{% url 'movies-detail' %}?id={{ movie.imdbID }}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                                            <a href=" #" class="btn btn-default btn-sm favourite" role="button"  onclick="save_fav({{ movie }})">
+                                                <span class="glyphicon glyphicon-heart" data_id = "1" id = "fav_{{ movie.imdbID }}" {% if movie.fav %} style = "color:red;" {% endif %} ></span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    {% if forloop.counter|divisibleby:'3' %}
+                        </div>
+                    {% endif %}
+                {% endif %}
         {% endfor %}
-       {% endif %}
-    </div>
-
-
-
+    {% else %}
+        <div class="jumbotron">
+            <h1>Movie App!</h1>
+            <p>App to search for movies , save as favoutire and view all the details about a movie.</p>
+            <p>Steps to use the app:</p>
+            <ul>
+                <li>In top right corner use the search box to search for a movie</li>
+                <li>Once the movies are listed use the "details" button or click the poster image to view the details of the movie</li>
+                <li>Click on the heart symbol to save the movie as favourite</li>
+                <li>Click the My Favourite button to view the list of all our favourite movies</li>
+            </ul>
+        </div>
+    {% endif %}
+    {% endif %}
+</div>
 {% endblock %}

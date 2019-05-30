@@ -126,3 +126,4 @@ OMDB_URL = 'http://www.omdbapi.com/'
 OMDB_API_KEY = 'a43a80f'
 
 LOGIN_REDIRECT_URL = 'movies-search'
+LOGIN_URL = 'login'
